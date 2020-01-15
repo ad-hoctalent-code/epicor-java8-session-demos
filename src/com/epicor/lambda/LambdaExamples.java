@@ -2,6 +2,8 @@ package com.epicor.lambda;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Function;
+import java.util.function.Predicate;
 
 public class LambdaExamples {
 	public static void main(String[] args) {
@@ -37,6 +39,16 @@ public class LambdaExamples {
 		Searchable fordCars = c -> c.brand.equals("Ford");
 		System.out.println(filterCars(cars, fordCars));
 		
+		System.out.println("******** Predicate Interface ******");
+		
+		Predicate<Car> filterSedan = c -> c.carType == CarType.SEDAN;
+		
+		System.out.println(filterCarsFunction(cars, filterSedan));
+		System.out.println(filterCarsFunction(cars, c -> c.brand.equals("Kia")));
+		
+		
+		
+		
 		
 
 		
@@ -45,6 +57,16 @@ public class LambdaExamples {
 	}
 	
 	public static List<Car> filterCars(List<Car>cars, Searchable s){
+		List<Car> filteredCars = new ArrayList<Car>();
+		for(Car car : cars)
+		if(s.test(car)) {
+			filteredCars.add(car);
+		}
+		return filteredCars;
+	}
+	
+	
+	public static List<Car> filterCarsFunction(List<Car>cars, Predicate<Car>s){
 		List<Car> filteredCars = new ArrayList<Car>();
 		for(Car car : cars)
 		if(s.test(car)) {
